@@ -1,0 +1,8 @@
+argparse
+numpy
+torch
+tqdm
+pillow
+torchvision
+opencv-contrib-python
+timm
