@@ -24,7 +24,7 @@ Data augmentation is vital in deep learning for enhancing model robustness by ar
 
 ``` shell
 git clone https://github.com/SS-hj/SaliencyMixPlus.git
-cd SaliencyMixPllus
+cd SaliencyMixPlus
 conda create -n saliencymixplus python=3.8
 conda activate saliencymixplus
 pip install -r requirements.txt
