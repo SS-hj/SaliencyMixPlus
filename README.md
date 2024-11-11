@@ -14,11 +14,11 @@ Data augmentation is vital in deep learning for enhancing model robustness by ar
 
 ### CIFAR-100
 
-<img width="500" alt="teaser" src="./result1.PNG">
+<img width="500" alt="teaser" src="result1.png">
 
 ### Oxford-IIIT Pet
 
-<img width="500" alt="teaser" src="./result2.PNG">
+<img width="500" alt="teaser" src="result2.png">
 
 ## Installation
 
