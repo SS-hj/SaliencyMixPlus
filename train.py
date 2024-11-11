@@ -8,12 +8,14 @@ from torch.utils.data import Dataset, DataLoader
 from PIL import Image
 from torchvision import datasets, transforms
 from utils import CSVLogger
-from data_augmentations import CutMix, SaliencyMix, SaliencyMixPlus
+from CutMix import CutMix
+from SaliencyMix import SaliencyMix
+from SaliencyMixPlus import SaliencyMixPlus
 import os
 import timm
 
 parser = argparse.ArgumentParser(description='SaliencyMixPlus')
-parser.add_argument('--dataset', '-d', default='oxford_pet', help='dataset (options: cifar10, cifar100, and oxford_pet)')
+parser.add_argument('--dataset', '-d', default='oxford_pet', help='dataset (options: cifar100, and oxford_pet)')
 parser.add_argument('--model', '-a', default='resnet18')
 parser.add_argument('--batch_size', type=int, default=256,
                     help='input batch size for training (default: 256)')
@@ -48,7 +50,7 @@ def main():
         torch.backends.cudnn.benchmark = False
         torch.use_deterministic_algorithms(True)
     
-    if args.dataset.startswith('cifar'):
+    if args.dataset == 'cifar100':
         normalize = transforms.Normalize(mean=[x / 255.0 for x in [125.3, 123.0, 113.9]],
                                     std=[x / 255.0 for x in [63.0, 62.1, 66.7]])
 
@@ -61,28 +63,15 @@ def main():
             transforms.ToTensor(),
             normalize])
         
-        if args.dataset == 'cifar10':
-            num_classes = 10
-            train_dataset = datasets.CIFAR10(root='data/',
-                                            train=True,
-                                            transform=train_transform,
-                                            download=True)
-            test_dataset = datasets.CIFAR10(root='data/',
-                                            train=False,
-                                            transform=test_transform,
-                                            download=True)
-        elif args.dataset == 'cifar100':
-            num_classes = 100
-            train_dataset = datasets.CIFAR100(root='data/',
-                                            train=True,
-                                            transform=train_transform,
-                                            download=True)
-            test_dataset = datasets.CIFAR100(root='data/',
-                                            train=False,
-                                            transform=test_transform,
-                                            download=True)
-        else:
-            raise Exception('unknown dataset: {}'.format(args.dataset))
+        num_classes = 100
+        train_dataset = datasets.CIFAR100(root='dataset/',
+                                        train=True,
+                                        transform=train_transform,
+                                        download=True)
+        test_dataset = datasets.CIFAR100(root='dataset/',
+                                        train=False,
+                                        transform=test_transform,
+                                        download=True)
         
     elif args.dataset == "oxford_pet":
         class OxfordIIITPetDataset(Dataset):
